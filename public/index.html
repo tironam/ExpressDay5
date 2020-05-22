@@ -6,6 +6,46 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <form>
+        <p>
+            <label for="name">Grocery:</label>
+            <input type="text" name="name" id="name">
+        </p>
+        <p>
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" id="quantity">
+        </p>
+        <button id="addGrocery">Add to grocery list</button>
+    </form>
+    <ul id="groceries"></ul>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+
+        document.getElementById('addGrocery').addEventListener('click', event => {
+            event.preventDefault()
+            axios.post('/api/groceries', {
+                name: document.getElementById('name').value ,
+                quantity: document.getElementById('quantity').value 
+            })
+            .then(() => {
+                getGroceries()
+                document.getElementById('name').value = ''
+                document.getElementById('quantity').value = null
+            })
+        })
+
+        const getGroceries = () => {
+            axios.get('/api/groceries')
+                .then(({ data }) => {
+                    document.getElementById('groceries').innerHTML = ''
+                    let groceryElem = document.createElement('li')
+                    groceryElem.textContent = `${groceries.name} | Quantity: ${groceries.quantity}`
+                    document.getElementById('groceries').append.groceryElem
+                })
+                .catch(err => console.error(err))
+        }
+
+    </script>
 </body>
 </html>
