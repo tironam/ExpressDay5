@@ -39,9 +39,12 @@
             axios.get('/api/groceries')
                 .then(({ data }) => {
                     document.getElementById('groceries').innerHTML = ''
-                    let groceryElem = document.createElement('li')
-                    groceryElem.textContent = `${groceries.name} | Quantity: ${groceries.quantity}`
-                    document.getElementById('groceries').append.groceryElem
+                    data.forEach(grocery => {
+                        let groceryElem = document.createElement('li')
+                        groceryElem.textContent = `${grocery.name} | Quantity: ${grocery.quantity}`
+                        document.getElementById('groceries').append.groceryElem
+                    })
+                    
                 })
                 .catch(err => console.error(err))
         }
